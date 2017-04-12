@@ -3,7 +3,11 @@ import os
 import struct
 import zlib
 import itertools
-from cStringIO import StringIO
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from io import StringIO
+
 
 from idzip import compressor, caching
 
@@ -263,7 +267,7 @@ def _read_gzip_header(input):
 def _read_exactly(input, size):
     data = input.read(size)
     if len(data) != size:
-        raise EOFError, "Reached EOF"
+        raise EOFError("Reached EOF")
     return data
 
 

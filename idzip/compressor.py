@@ -72,7 +72,7 @@ def _compress_data(input, in_size, output):
     2) 4 bytes of CRC.
     3) 4 bytes of file size.
     """
-    assert in_size <= 0xffffffffL
+    assert in_size <= 0xffffffff
     zlengths = []
     crcval = zlib.crc32("")
     compobj = zlib.compressobj(COMPRESSION_LEVEL, zlib.DEFLATED,
@@ -135,7 +135,7 @@ def _prepare_header(output, in_size, basename, mtime):
     output.write(chr(flags))
 
     # The mtime will be undefined if it does not fit.
-    if mtime > 0xffffffffL:
+    if mtime > 0xffffffff:
         mtime = 0
     _write32(output, mtime)
 
@@ -214,5 +214,5 @@ def _write16(output, value):
 def _write32(output, value):
     """Writes only the lowest 4 bytes from the given number.
     """
-    output.write(struct.pack("<I", value & 0xffffffffL))
+    output.write(struct.pack("<I", value & 0xffffffff))
 

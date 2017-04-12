@@ -3,7 +3,7 @@ def open(filename):
     from idzip.decompressor import IdzipFile
     try:
         return IdzipFile(filename)
-    except IOError, e:
+    except IOError as e:
         import logging
         import gzip
         logging.info("Using gzip fallback: %r", e)
